@@ -4,8 +4,8 @@ module.exports = {
     lang: 'zh-CN',
     description: 'DINGDANG前端规范.',
     themeConfig: {
-        repo: 'anncwb/vue-vben-admin',
-        docsRepo: 'anncwb/vue-vben-admin-doc',
+        repo: '',
+        docsRepo: 'Le-M-L/webNormDoc',
         logo: '/logo.svg',
         docsBranch: 'main',
         editLinks: true,
@@ -21,16 +21,8 @@ function createNav() {
             link: '/guide/',
             items: [
                 {
-                    text: '指南',
-                    link: '/guide/introduction',
-                },
-                {
-                    text: '深入',
-                    link: '/dep/icon',
-                },
-                {
-                    text: '其他',
-                    link: '/other/faq',
+                    text: 'web规范',
+                    link: '/guide/namingRule',
                 },
             ],
         },
@@ -41,12 +33,32 @@ function createSidebar() {
     return {
         '/': [
             {
-                text: '指南',
+                text: 'web规范',
                 children: [
                     {
-                        text: '介绍',
-                        link: '/guide/introduction',
+                        text: '命名规范',
+                        link: '/guide/namingRule',
                     },
+                    {
+                      text:'HTML 规范',
+                      link: '/guide/htmlRule',
+                    },
+                    {
+                      text:'CSS 规范',
+                      link: '/guide/CssRule',
+                    },
+                    {
+                      text:'LESS 规范',
+                      link: '/guide/LessRule',
+                    },
+                    {
+                      text:'Javascript 规范',
+                      link: '/guide/JsRule',
+                    },
+                    {
+                      text:'Vue 规范',
+                      link: '/guide/VueRule',
+                    }
                 ],
             },
         ],

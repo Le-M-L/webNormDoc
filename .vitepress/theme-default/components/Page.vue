@@ -4,7 +4,6 @@
       <slot name="top" />
 
       <div class="content">
-          123
         <Content />
       </div>
 
