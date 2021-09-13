@@ -6,7 +6,6 @@
 
 <script setup>
     import { defineProps, onMounted } from 'vue';
-    export default {};
 
     // global _bsa
     const ID = 'bsa-cpc-script';
