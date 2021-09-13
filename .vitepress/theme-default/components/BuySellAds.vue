@@ -1,9 +1,9 @@
 <template>
     <div class="buy-sell-ads">
         <div class="bsa-cpc" />
+        
     </div>
 </template>
-
 <script setup>
     import { defineProps, onMounted } from 'vue';
 
