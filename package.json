@@ -1,0 +1,23 @@
+{
+  "name": "webNormDoc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vitepress dev --port 3100",
+    "build": "vitepress build",
+    "serve": "vitepress serve"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.0",
+    "vite-plugin-components": "^0.13.3",
+    "vite-plugin-icons": "^0.6.5",
+    "vite-plugin-windicss": "^1.4.2",
+    "vitepress": "^0.17.3",
+    "windicss": "^3.1.7"
+  },
+  "dependencies": {
+    "@iconify/json": "^1.1.400",
+    "@vueuse/core": "^6.3.3"
+  }
+}
