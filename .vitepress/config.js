@@ -17,20 +17,93 @@ module.exports = {
 function createNav() {
     return [
         {
-            text: '指南',
-            link: '/guide/',
-            items: [
-                {
-                    text: 'web规范',
-                    link: '/guide/namingRule',
-                },
-            ],
+            text: 'web规范',
+            link: '/guide/namingRule',
+            // items: [
+            //     {
+            //         text: 'web规范',
+            //         link: '/guide/namingRule',
+            //     }
+            // ],
+        },
+        {
+            text: '笔记',
+            link: '/minute/vue/index',
         },
     ];
 }
 
 function createSidebar() {
     return {
+        '/minute/': [
+            {
+                text: 'Vue',
+                children: [
+                    {
+                        text: 'vue',
+                        link: '/minute/vue/index',
+                    },
+                ],
+            },
+            {
+                text: 'React',
+                children: [
+                    {
+                        text: 'react',
+                        link: '/minute/react/index',
+                    },
+                ],
+            },
+            {
+                text: 'JS',
+                children: [
+                    {
+                        text: '逻辑操作符',
+                        link: '/minute/js/index',
+                    },
+                    {
+                        text: 'call、apply 和 bind',
+                        link: '/minute/js/call',
+                    },
+                ],
+            },
+            {
+                text: 'CSS',
+                children: [
+                    {
+                        text: 'css',
+                        link: '/minute/css/index',
+                    },
+                ],
+            },
+            {
+                text: 'HTML',
+                children: [
+                    {
+                        text: 'heml',
+                        link: '/minute/heml/index',
+                    },
+                ],
+            },
+            {
+                text: 'npm',
+                children: [
+                    {
+                        text: 'npm',
+                        link: '/minute/npm/index',
+                    },
+                ],
+            },
+            {
+                text: 'Node',
+                children: [
+                    {
+                        text: 'node',
+                        link: '/minute/node/index',
+                    },
+                ],
+            },
+        ],
         '/': [
             {
                 text: 'web规范',
@@ -62,5 +135,6 @@ function createSidebar() {
                 ],
             },
         ],
+      
     };
 }
