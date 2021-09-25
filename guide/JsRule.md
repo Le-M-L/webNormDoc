@@ -76,35 +76,11 @@ obsolete 废弃/depreciate 废旧,
 collect 收集/aggregate 聚集
 ```
 
-## 2.代码格式
-1. 使用 2 个空格进行缩进
-```js
-if (x < y) {
-  x += 10;
-} else {
-  x += 1;
-}
-```
 
 2. 不同逻辑、不同语义、不同业务的代码之间插入一个空行分隔开来以提升可读性。
 ::: warning
 说明：任何情形，没有必要插入多个空行进行隔开。
 :::
-
-## 3.字符串
-统一使用单引号(‘)，不使用双引号(“)。这在创建 HTML 字符串非常有好处：
-
-**正列**
-```js
-let str = 'foo';
-let testDiv = '<div id="test"></div>';
-```
-
-**反例**
-```js
-let str = 'foo';
-let testDiv = "<div id='test'></div>";
-```
 
 ## 4.对象声明
 1. 使用字面值创建对象

@@ -27,8 +27,22 @@ function createNav() {
             // ],
         },
         {
+            text: 'UI规范',
+            link: '/guide/namingRule',
+            items: [
+                {
+                    text: '钉铛后台系统规范',
+                    link: 'http://localhost:3100/public/钉铛后台系统规范.pdf',
+                },
+                {
+                    text: '钉铛科技移动端规范',
+                    link: 'http://localhost:3100/public/钉铛科技移动端规范.pdf',
+                }
+            ],
+        },
+        {
             text: '笔记',
-            link: '/minute/vue/index',
+            link: '/minute/vue/slots',
         },
     ];
 }
@@ -41,7 +55,7 @@ function createSidebar() {
                 children: [
                     {
                         text: 'vue',
-                        link: '/minute/vue/index',
+                        link: '/minute/vue/slots',
                     },
                 ],
             },
@@ -64,6 +78,10 @@ function createSidebar() {
                     {
                         text: 'call、apply 和 bind',
                         link: '/minute/js/call',
+                    },
+                    {
+                        text: 'import 和 export',
+                        link: '/minute/js/export',
                     },
                 ],
             },
