@@ -174,9 +174,13 @@ function createSidebar() {
                 text: 'web规范',
                 children: [
                     {
-                        text: '钉铛科技前端开发规范',
+                        text: '前端开发规范',
                         link: '/guide/webRule',
                     },
+                    {
+                        text: 'git提交规范',
+                        link: '/guide/Git',
+                    }
                     // {
                     //     text: 'HTML 规范',
                     //     link: '/guide/htmlRule',
