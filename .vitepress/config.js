@@ -18,7 +18,7 @@ function createNav() {
     return [
         {
             text: 'web规范',
-            link: '/guide/namingRule',
+            link: '/guide/webRule',
             // items: [
             //     {
             //         text: 'web规范',
@@ -28,7 +28,7 @@ function createNav() {
         },
         {
             text: 'UI规范',
-            link: '/guide/namingRule',
+            link: '/guide/',
             items: [
                 {
                     text: '钉铛后台系统规范',
@@ -37,122 +37,143 @@ function createNav() {
                 {
                     text: '钉铛科技移动端规范',
                     link: 'http://localhost:3100/public/钉铛科技移动端规范.pdf',
-                }
+                },
+                {
+                    text: '钉铛科技前端开发规范',
+                    link: '/guide/webRule',
+                },
             ],
         },
         {
             text: '笔记',
-            link: '/minute/vue/slots',
+            link: '/minute/',
+            items: [
+                {
+                    text: 'Vue',
+                    link: '/minute/vue/index',
+                },
+                {
+                    text: 'React',
+                    link: '/minute/react/index',
+                },
+                {
+                    text: 'Js',
+                    link: '/minute/js/index',
+                },
+                {
+                    text: 'Css',
+                    link: '/minute/css/index',
+                },
+                {
+                    text: 'Html',
+                    link: '/minute/html/index',
+                },
+                {
+                    text: 'Npm',
+                    link: '/minute/npm/index',
+                },
+                {
+                    text: 'Node',
+                    link: '/minute/node/index',
+                },
+            ],
         },
     ];
 }
 
 function createSidebar() {
     return {
-        '/minute/': [
+        '/minute/vue/': [
             {
-                text: 'Vue',
-                children: [
-                    {
-                        text: 'vue',
-                        link: '/minute/vue/slots',
-                    },
-                ],
-            },
-            {
-                text: 'React',
-                children: [
-                    {
-                        text: 'react',
-                        link: '/minute/react/index',
-                    },
-                ],
-            },
-            {
-                text: 'JS',
-                children: [
-                    {
-                        text: '逻辑操作符',
-                        link: '/minute/js/index',
-                    },
-                    {
-                        text: 'call、apply 和 bind',
-                        link: '/minute/js/call',
-                    },
-                    {
-                        text: 'import 和 export',
-                        link: '/minute/js/export',
-                    },
-                ],
-            },
-            {
-                text: 'CSS',
-                children: [
-                    {
-                        text: 'css',
-                        link: '/minute/css/index',
-                    },
-                ],
-            },
-            {
-                text: 'HTML',
-                children: [
-                    {
-                        text: 'heml',
-                        link: '/minute/heml/index',
-                    },
-                ],
-            },
-            {
-                text: 'npm',
-                children: [
-                    {
-                        text: 'npm',
-                        link: '/minute/npm/index',
-                    },
-                ],
-            },
-            {
-                text: 'Node',
-                children: [
-                    {
-                        text: 'node',
-                        link: '/minute/node/index',
-                    },
-                ],
+                text: 'vue',
+                link: '/minute/vue/index',
             },
         ],
+        '/minute/react/': [
+            {
+                text: 'React',
+                link: '/minute/react/index',
+            },
+        ],
+        '/minute/js/': [
+            {
+                text: 'Js',
+                link: '/minute/js/index',
+            },
+            {
+                text: 'call、apply 和 bind',
+                link: '/minute/js/call',
+            },
+            {
+                text: 'import 和 export',
+                link: '/minute/js/export',
+            },
+        ],
+        '/minute/css/': [
+            {
+                text: 'Css',
+                link: '/minute/css/index',
+            },
+        ],
+        '/minute/html/': [
+            {
+                text: 'Html',
+                link: '/minute/html/index',
+            },
+        ],
+        '/minute/npm/': [
+            {
+                text: 'Npm',
+                link: '/minute/npm/index',
+            },
+        ],
+        '/minute/node/': [
+            {
+                text: 'Node',
+                link: '/minute/node/index',
+            },
+        ],
+        '/minute/':[
+            {
+                text:'mac'
+            }
+        ],
+        // '/guide/webRule':[
+        //     {
+        //         text:'钉铛科技前端开发规范',
+        //         link:'/guide/webRule'
+        //     }
+        // ],
         '/': [
             {
                 text: 'web规范',
                 children: [
                     {
-                        text: '命名规范',
-                        link: '/guide/namingRule',
+                        text: '钉铛科技前端开发规范',
+                        link: '/guide/webRule',
                     },
-                    {
-                      text:'HTML 规范',
-                      link: '/guide/htmlRule',
-                    },
-                    {
-                      text:'CSS 规范',
-                      link: '/guide/CssRule',
-                    },
-                    {
-                      text:'LESS 规范',
-                      link: '/guide/LessRule',
-                    },
-                    {
-                      text:'Javascript 规范',
-                      link: '/guide/JsRule',
-                    },
-                    {
-                      text:'Vue 规范',
-                      link: '/guide/VueRule',
-                    }
+                    // {
+                    //     text: 'HTML 规范',
+                    //     link: '/guide/htmlRule',
+                    // },
+                    // {
+                    //     text: 'CSS 规范',
+                    //     link: '/guide/CssRule',
+                    // },
+                    // {
+                    //     text: 'LESS 规范',
+                    //     link: '/guide/LessRule',
+                    // },
+                    // {
+                    //     text: 'Javascript 规范',
+                    //     link: '/guide/JsRule',
+                    // },
+                    // {
+                    //     text: 'Vue 规范',
+                    //     link: '/guide/VueRule',
+                    // },
                 ],
             },
         ],
-      
     };
 }
