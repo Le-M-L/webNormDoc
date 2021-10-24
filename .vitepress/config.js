@@ -76,6 +76,18 @@ function createNav() {
                     text: 'Node',
                     link: '/minute/node/index',
                 },
+                {
+                    text: 'Homebrew',
+                    link:'/minute/homebrew/index'
+                },
+                {
+                    text: 'Java',
+                    link:'/minute/java/index'
+                },
+                {
+                    text: 'Nginx',
+                    link:'/minute/nginx/index'
+                }
             ],
         },
     ];
@@ -133,9 +145,22 @@ function createSidebar() {
                 link: '/minute/node/index',
             },
         ],
-        '/minute/':[
+        '/minute/homebrew':[
             {
-                text:'mac'
+                text: 'Homebrew',
+                link:'/minute/homebrew/index'
+            }
+        ],
+        '/minute/java':[
+            {
+                text: 'Java',
+                link:'/minute/java/index'
+            }
+        ],
+        '/minute/nginx':[
+            {
+                text: 'Nginx',
+                link:'/minute/nginx/index'
             }
         ],
         // '/guide/webRule':[
