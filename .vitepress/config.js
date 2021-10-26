@@ -50,44 +50,61 @@ function createNav() {
             items: [
                 {
                     text: 'Vue',
-                    link: '/minute/vue/index',
+                    link: '/minute/vue/vue',
                 },
+
                 {
                     text: 'React',
-                    link: '/minute/react/index',
+                    link: '/minute/react/react',
                 },
                 {
                     text: 'Js',
-                    link: '/minute/js/index',
+                    link: '/minute/js/js',
+                },
+                {
+                    text: 'Ts',
+                    link: '/minute/ts/ts',
                 },
                 {
                     text: 'Css',
-                    link: '/minute/css/index',
+                    link: '/minute/css/css',
                 },
                 {
                     text: 'Html',
-                    link: '/minute/html/index',
+                    link: '/minute/html/html',
                 },
                 {
                     text: 'Npm',
-                    link: '/minute/npm/index',
+                    link: '/minute/npm/npm',
                 },
                 {
                     text: 'Node',
-                    link: '/minute/node/index',
+                    link: '/minute/node/node',
                 },
                 {
                     text: 'Homebrew',
-                    link:'/minute/homebrew/index'
+                    link: '/minute/homebrew/homebrew'
                 },
                 {
                     text: 'Java',
-                    link:'/minute/java/index'
+                    link: '/minute/java/java'
                 },
                 {
                     text: 'Nginx',
-                    link:'/minute/nginx/index'
-                }
+                    link: '/minute/nginx/nginx'
+                },
+                {
+                    text: 'Vite',
+                    link: '/minute/vite/vite',
+                },
+                {
+                    text: 'Webpack',
+                    link: '/minute/webpack/webpack',
+                },
+                {
+                    text: '插件',
+                    link: '/minute/plugin/plugin',
+                },
             ],
         },
     ];
@@ -98,19 +115,20 @@ function createSidebar() {
         '/minute/vue/': [
             {
                 text: 'vue',
-                link: '/minute/vue/index',
+                link: '/minute/vue/vue',
             },
         ],
+
         '/minute/react/': [
             {
                 text: 'React',
-                link: '/minute/react/index',
+                link: '/minute/react/react',
             },
         ],
         '/minute/js/': [
             {
                 text: 'Js',
-                link: '/minute/js/index',
+                link: '/minute/js/js',
             },
             {
                 text: 'call、apply 和 bind',
@@ -121,47 +139,71 @@ function createSidebar() {
                 link: '/minute/js/export',
             },
         ],
+        '/minute/ts/': [
+            {
+                text: 'ts',
+                link: '/minute/ts/ts',
+            },
+        ],
         '/minute/css/': [
             {
                 text: 'Css',
-                link: '/minute/css/index',
+                link: '/minute/css/css',
             },
         ],
         '/minute/html/': [
             {
                 text: 'Html',
-                link: '/minute/html/index',
+                link: '/minute/html/html',
             },
         ],
         '/minute/npm/': [
             {
                 text: 'Npm',
-                link: '/minute/npm/index',
+                link: '/minute/npm/npm',
             },
         ],
         '/minute/node/': [
             {
                 text: 'Node',
-                link: '/minute/node/index',
+                link: '/minute/node/node',
             },
         ],
-        '/minute/homebrew':[
+        '/minute/homebrew': [
             {
                 text: 'Homebrew',
-                link:'/minute/homebrew/index'
+                link: '/minute/homebrew/homebrew'
             }
         ],
-        '/minute/java':[
+        '/minute/java': [
             {
                 text: 'Java',
-                link:'/minute/java/index'
+                link: '/minute/java/java'
             }
         ],
-        '/minute/nginx':[
+        '/minute/nginx': [
             {
                 text: 'Nginx',
-                link:'/minute/nginx/index'
+                link: '/minute/nginx/nginx'
             }
+        ],
+        '/minute/vite/': [
+            {
+                text: 'Vite',
+                link: '/minute/vite/vite',
+            },
+        ],
+        '/minute/webpack/': [
+            {
+                text: 'Webpack',
+                link: '/minute/webpack/webpack',
+            },
+        ],
+        '/minute/plugin/': [
+            {
+                text: '插件',
+                link: '/minute/plugin/plugin',
+            },
         ],
         // '/guide/webRule':[
         //     {
