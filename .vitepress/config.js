@@ -32,11 +32,11 @@ function createNav() {
             items: [
                 {
                     text: '钉铛后台系统规范',
-                    link: 'http://localhost:3100/public/钉铛后台系统规范.pdf',
+                    link: 'http://116.62.122.54:8090/钉铛后台系统规范.pdf',
                 },
                 {
                     text: '钉铛科技移动端规范',
-                    link: 'http://localhost:3100/public/钉铛科技移动端规范.pdf',
+                    link: 'http://116.62.122.54:8090/钉铛科技移动端规范.pdf',
                 },
                 {
                     text: '钉铛科技前端开发规范',
@@ -137,6 +137,10 @@ function createSidebar() {
             {
                 text: 'import 和 export',
                 link: '/minute/js/export',
+            },
+            {
+                text: 'FileEeader',
+                link: '/minute/js/FileReader',
             },
         ],
         '/minute/ts/': [
