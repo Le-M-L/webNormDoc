@@ -99,3 +99,5 @@ function ParentComp () {
 ```
 
 
+# useEffect
+useEffect 里的东西每次都是独立的
