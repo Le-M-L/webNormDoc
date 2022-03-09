@@ -107,6 +107,10 @@ function createNav() {
                 },
             ],
         },
+        {
+            text:'面试题',
+            link:'/hmilyl/js'
+        }
     ];
 }
 
@@ -215,6 +219,28 @@ function createSidebar() {
         //         link:'/guide/webRule'
         //     }
         // ],
+        '/hmilyl/':[
+            {
+                text: 'HTML相关',
+                link: '/hmilyl/Html',
+            },
+            {
+                text: 'CSS相关',
+                link: '/hmilyl/Css',
+            },
+            {
+                text: 'JS相关',
+                link: '/hmilyl/Js',
+            },
+            {
+                text: 'Vue相关',
+                link: '/hmilyl/Vue',
+            },
+            {
+                text: 'React相关',
+                link: '/hmilyl/React',
+            },
+        ],
         '/': [
             {
                 text: 'web规范',
@@ -250,5 +276,6 @@ function createSidebar() {
                 ],
             },
         ],
+        
     };
 }
