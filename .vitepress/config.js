@@ -149,7 +149,7 @@ function createSidebar() {
         ],
         '/minute/ts/': [
             {
-                text: 'ts',
+                text: 'TS笔记',
                 link: '/minute/ts/ts',
             },
         ],
