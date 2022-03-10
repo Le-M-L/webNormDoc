@@ -134,3 +134,26 @@ add('a','b');
 add(1,2);
 //add(1,'b'); // 报错
 ```
+
+## 类声明&属性
+public      公开的属性
+private     私有的属性
+readonly    只读属性
+```ts
+// public 
+class Person{
+    // name:string = 'name';
+    constructor(public myName:string){
+        // this.name = myName
+    }
+
+    get name(){
+        return this.myName;
+    }
+    set name(value){
+        this.myName = value
+    }
+}
+let user = new Person('name');
+user.name = 'name1';
+```
