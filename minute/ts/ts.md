@@ -9,8 +9,9 @@ Function    函数            // let fn:(name:string) => vido = (name:string):vo
 void        空值             代表没有任何类型    函数没有返回值就是 void
 null        null            null 其他类型的子类型  
 undefined   undefined       undefined 是其他类的子类型
-never       不会出现的值      没有类型是never子类型 never只能赋给never 
 any         任意类型         不对类型进行检测
+unknown     未知类型         unknown 是 any 的安全类型 不管和谁联合  最最后都是 unknown
+never       不会出现的值      never是unknown子类型 没有类型是never子类型 never只能赋给never 
 bigint      最大值           Number.MAX_SAFE_INTEGER    //2**53-1
 
 // never 示例
@@ -49,6 +50,18 @@ namespace b {
     let name: string = 2;
 }
 b.name //报错
+
+// 使用命名空间扩展枚举
+enum Color{
+    red=1,
+    yellow=2,
+    blue=3
+}
+namespace Color{
+    export const green=4;
+    export const purple=5;
+}
+Color.purple;
 ```
 
 ## 枚举
@@ -57,6 +70,10 @@ b.name //报错
 enum Gender {  GIRL, BOY, }
 console.log(Gender["BOY"], Gender[1]); //  1 BOY
 console.log(Gender["GIRL"], Gender[0]); // 0 GIRL
+// 数字和枚举 是兼容的
+enum Colors {Red, Yellow};
+let c: Colors = Colors.Red;
+c = 1
 ```
 
 常量枚举 ——— 编译完之后 删除枚举变量
@@ -546,5 +563,160 @@ class Person implements Speakable, Eatable {
     }
 }
 ```
+## type 定义类型
+type 关键字用来定义一种类型
+```ts
+type Methods = 'GET' | 'POST' | 'PUT' | 'DELETE'
+let method: Methods
+method = 'PUT' // OK
+method = 'aaa' // error
+```
+## 泛型
 
-## 泛型类
+```ts
+// 泛型类
+class MyArray<T>{
+    private list:T[] = [];
+    add(value:T){
+        this.list.push(value)
+    }
+    getMax():T{
+        return this.list[0];
+    }
+}
+let array = new MyArray<number>();
+array.add(1);
+array.add(2);
+array.add(3);
+console.log(array.getMax());
+// 与new
+function factory<T>(type:{new():T}):T{
+    return new type()
+}
+class Person{};
+let p = factory<Person>(Person);
+console.log(p);
+// 泛型接口
+// 默认泛型
+interface Calculate<T = number>{
+  <U>(a:T,b:T):U
+}
+let sum3: Calculate<number> = function <U>(a: number, b: number): U {
+  return a as any;
+};
+sum3<string>(1, 2);
+// 泛型可以写多个
+function swap<A,B>(tuple:[A,B]):[B,A]{
+   return [tuple[1],tuple[0]];
+}
+
+// 泛型约束
+interface LengthWise{
+  length:number
+}
+function logger2<T extends LengthWise>(val: T){
+    console.log(val.length)
+}
+let obj = {length: 10};
+type Obj = typeof obj;
+logger2<Obj>(obj);
+
+//判断兼容不兼容跟extends继承没有一点关系 ,只看形状 有没有对应的属性
+class GrandFather {
+  grandFather:string
+}
+class Father extends GrandFather {
+  father:string;
+}
+class Child extends Father{
+  child:string
+}
+//约束  
+//或说T能赋值给Father
+//T是Father的子类型
+function get<T extends Father>(){}; // Father Child 能通过
+// 接口的兼容性--
+//返回值类型是协变的，而参数类型是逆变的
+//返回值类型可以传子类, 参数可以传父类;
+//参数逆变父类 返回值协变子类 搀你父,返鞋子
+// ts 参数是双向协变
+```
+
+## 类型保护 is
+```ts
+interface Bird {
+  swing: number;//2
+}
+interface Dog {
+  leg: number;//4
+}
+//  is Type 哪个参数是什么类型
+function isBird(y:Bird|Dog): y is Bird {
+    return (y as Bird).swing == 2;
+}
+function getAnimal(x: Bird | Dog) {
+    if(isBird(x)){
+        console.log(x);
+    }else{
+        console.log(x);
+    }
+}
+```
+
+## 联合和交叉类型
+```ts
+// 交叉类型
+interface A{name:string, c:number};
+interface B{age:number, c: number};
+let a: A;
+let b: B;
+type C = A&B;
+let c:C = {name:'name'm age:10, c: 10};
+a = c;
+b = c;
+// 联合类型
+type AA = string|number;
+type BB = string|boolean;
+```
+## keyof 作用
+```ts
+// keyof 可以直接拿到 建名
+interface data {
+    id: number,
+    name: string
+}
+// keyof data 等于 'id' | 'name'
+function getData(d: keyof data){
+    return d
+}
+getData('id')
+
+
+type T1 = { delay: "One"; setMessage: "Two" };
+type K1 = keyof T1;//T1的key组成的联合类型 delay|setMessage
+type V1 = T1[K1];//V1=就是T1的值 的联合类型  "One" | "Two"
+
+```
+
+## declare 扩展全局变量
+```ts
+declare global{
+    interface String {
+       double(): string;
+    }
+
+    interface Window {
+      myName: string;
+    }
+}
+
+String.prototype.double = function(){
+    return this+this;
+}
+let result = new String("hello").double();//hellohello
+console.log(result);
+
+
+console.log(window.myName);
+
+```
