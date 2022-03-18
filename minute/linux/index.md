@@ -91,7 +91,7 @@ sudo yum install docker-ce
 20. exit;  退出docker 容器
 21. docker attach 容器ID  / docker exec -it 容器ID /bin/bash      进入容器
  如：docker exec -it mysql8.0 /bin/bash
-
+22. docker restart 容器id 重启容器
 
 ## 使用docker 安装mysql
 1. 使用docker pull 拉取 docker hub(https://hub.docker.com/search?q=&type=image) 仓库中mysql镜像（注意备注）
@@ -116,4 +116,115 @@ docker ps -a
 docker exec -it mysql8.0 /bin/bash
 cd /usr/bin
 mysql -u root -p
+```
+
+## nginx 安装
+1. pull ngxin
+```sh
+docker pull nginx
+```
+2. 启动nginx
+```sh
+docker run --name nginx -p 80:80 -d nginx
+```
+3. 查看结果
+```sh
+docker ps
+```
+进入docker ngxin
+```sh
+docker exec -it nginx bash
+```
+### 映射nginx 配置
+配置得在容器中进行，这样的话太麻烦了，所以把配置文件给映射出来，方便配置与管理
+1. 创建管理目录
+```sh
+wmkdir -p /data/nginx
+mkdir -p /data/nginx/www
+mkdir -p /data/nginx/conf
+mkdir -p /data/nginx/logs
+```
+
+2. 将容器中的相应文件copy到刚创建的管理目录中
+```sh
+docker cp 67e:/etc/nginx/nginx.conf /data/nginx/
+docker cp 67e:/etc/nginx/conf.d /data/nginx/conf/
+docker cp 67e:/usr/share/nginx/html/ /data/nginx/www/
+docker cp 67e:/var/log/nginx/ /data/nginx/logs/
+注：docker cp 67e 中的 "67e" 为容器ID前缀，只要唯一就好了
+```
+
+3. 停止并移除容器
+```sh
+docker stop 67e
+docker rm 67e
+```
+4. 再次启动容器并作目录挂载(也相当于共享)
+```sh
+docker run --name nginx -p 80:80 -v /data/nginx/nginx.conf:/etc/nginx/nginx.conf -v /data/nginx/www/:/usr/share/nginx/html/ -v /data/nginx/logs/:/var/log/nginx/ -v /data/nginx/conf/:/etc/nginx/conf.d --privileged=true -d nginx
+注：为了好看所以做了换行，执行的时候还是需要改成一行，每行一个空格隔开就可以了
+
+```
+5. 修改配置后 重启容器
+```sh
+docker restart 容器id  
+```
+
+### 配置相关
+1. 在location 中 echo "hello Nginx！" 访问可以直接输出文字
+```sh
+例：
+location / {
+    echo "hello Nginx！"
+}
+```
+2. location匹配规则：
+```sh
+1）最低级别匹配规则：
+location / {
+    echo "hello Nginx！"
+}
+2）最高级别匹配规则：
+location /user {
+    echo "hello user.hmtl"
+}
+3）其它级别匹配规则：
+location ^~ /user {
+    echo "hello user.hmtl"
+}
+location ~^ /user {
+    echo "hello user.hmtl"
+}
+location ~ ^/[a-z] {
+    echo "hello user.hmtl"
+}
+location ~ ^/\a {
+    echo "hello user.hmtl"
+}
+
+```
+3. 反向代理细节：
+```sh
+location /user {
+    proxy_pass http://ip;
+}
+location /order/ {
+    proxy_pass http://ip/;
+}
+访问结果：
+http://ip/user/xx...
+http://ip/xx...
+```
+4. 负载均衡配置
+```sh
+upstream order {
+    server 192.168.5.18:8080 weight=1;
+    server 192.168.5.18:8081 weight=1;
+}
+server{
+    location /order/ {
+        proxy_pass http://order/;
+    }
+}
+注：weight=1，配置的为权重，值越高权重越高
 ```

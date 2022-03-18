@@ -94,6 +94,10 @@ function createNav() {
                     link: '/minute/nginx/nginx'
                 },
                 {
+                    text: 'linux',
+                    link: '/minute/linux/index'
+                },
+                {
                     text: 'Vite',
                     link: '/minute/vite/vite',
                 },
@@ -193,6 +197,12 @@ function createSidebar() {
             {
                 text: 'Nginx',
                 link: '/minute/nginx/nginx'
+            }
+        ],
+        '/minute/linux': [
+            {
+                text: 'Nginx',
+                link: '/minute/linux/index'
             }
         ],
         '/minute/vite/': [
