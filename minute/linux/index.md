@@ -139,7 +139,7 @@ docker exec -it nginx bash
 配置得在容器中进行，这样的话太麻烦了，所以把配置文件给映射出来，方便配置与管理
 1. 创建管理目录
 ```sh
-wmkdir -p /data/nginx
+mkdir -p /data/nginx
 mkdir -p /data/nginx/www
 mkdir -p /data/nginx/conf
 mkdir -p /data/nginx/logs

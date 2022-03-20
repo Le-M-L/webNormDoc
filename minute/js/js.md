@@ -53,3 +53,20 @@ x ||= y  等同于 x || (x = y)
 ```js
 x &&= y  等同于 x && (x = y)
 ```
+
+## js 并发实现 promise All
+```js
+let fn = function (times, cb){
+    let result = [] 设计模式
+    return function(data){
+        result.push(data)
+        if(--times === 0) cb(result)
+    }
+}
+let newFn = fn(3,function(data){
+    console.log(data)
+})
+newFn(11)
+newFn(22)
+newFn(33)
+```
