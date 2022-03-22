@@ -70,3 +70,15 @@ newFn(11)
 newFn(22)
 newFn(33)
 ```
+## 执行上下文
+
+var a = 10;
+var b = function(){}
+会先声明 默认赋值为 undefind
+
+function c(){}; // 函数声明  会赋值
+this  // 作用域 会赋值
+
+如果代码段是函数体  那么会在上面的基础上 附加
+arguments            赋值
+自由变量的取值作用域    赋值
