@@ -1,4 +1,5 @@
 # nagin
+https://segmentfault.com/a/1190000015092063
 # 开启gzip
     gzip on;
     # 开启gzip_static

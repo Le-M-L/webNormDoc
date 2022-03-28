@@ -27,7 +27,7 @@ function objectFactory(){
 objectFactory(构造函数,初始化参数)
 
 ```
-### call 函数的实现步骤
+### call 函数的实现
 1. 判断调用对象是否为函数，即使是定义在函数的原型上的 但是可以出现使用call等调用的情况.
 2. 判断传入上下文对象是否存在 如果不存在 则设置为window
 3. 处理传入的参数 截取第一个参数后的所有参数
@@ -55,6 +55,60 @@ Function.prototype.myCall = function(context) {
     return result
 }
 ```
+### apply 函数的实现
+1. 判断调用对象是否为函数,即使是定义在函数的原型上的，但是也可能出现使用call等方式调用的情况
+2. 判断传入上下文对象是否存在,如果不存在，则设置为window
+3. 将函数作为上下文对象的一个属性
+4. 判断参数是否传入
+5. 使用上下文对象来调用这个方法 并保存返回结果
+6. 删除刚才新增的属性
+7. 返回结果
+```js
+Function.prototype.myApply = function(context){
+    // 判断调用对象是否为函数
+    if(typeof this !== 'function'){
+        throw new TypeError('Error')
+    }
+    let result = null;
+    // 判断context 是否存在 如果未传入则为window
+    context = context || window;
+    // 将函数设置为该对象的方法
+    context = context.fn = this;
+    // 调用方法
+    if(arguments[1]){
+        result = context.fn(...arguments[1]);
+    }else{
+        result = context.fn()
+    }
+    delete context.fn;
+    return result
+}
+```
+### bind 函数的实现
+1. 判断调用对象是否为函数，即使是定义在函数的原型上的，但是也可能出现使用call等方式调用的情况
+2. 保存当前函数的调用，获取其余传入参数值
+3. 创建一个函数返回
+4. 函数内部使用apply 
+```js
+Function.prototype.myBind = function(context){
+    // 判断调用对象是否为函数
+    if(typeof this !== 'function'){
+        throw new TypeError('Error')
+    }
+    // 获取参数
+    var args = [...arguments].slice(1);
+    var fn = this;
+    return function Fn(){
+        // 根据调用方式 传入不同绑定值
+        return fn.apply(this instanceof Fn ? this : context, args.concat(...arguments))
+    }
+}
+```
+### 异步编程的实现方式
+1. 回调函数 但是有缺点 回调函数嵌套的时候会造成回调函数地狱 上下两层的回调函数区间耦合度太高了 不利于代码的维护
+2. promise 的方式 使用promose的方式可以将嵌套的回调函数作为链式调用 但是使用这种方式 有时会造成多个then的链式调用可能会造成代码的语义不够明确
+3. generator 的方式它可以在函数的执行过程中，将函数的执行权转移出去，在函数外部还可以将执行权转移回来。当遇到异步函数执行的时候，将函数执行权转移出去，当异步函数执行完毕时再将执行权给转移回来。因此在 generator 内部对于异步操作的方式，可以以同步的顺序来书写。使用这种方式需要考虑的问题是何时将函数的控制权转移回来，因此需要有一个自动执行 generator 的机制，比如说 co 模块等方式来实现 generator 的自动执行。
+4. async 函数的方式,async函数是generator和promise实现的一个自动执行的语法糖 她内部自带执行器 当函数内部执行到一个await语句的时候 如果语句返回一个promise对象 那么函数将会等待promise 对象的状态变为resolve后在继续向下执行 因此可以将异步逻辑 转为为同步的顺序来书写 并且这个函数可以自动执行
 ### Map 和 Object 的区别
 ```sh
 意外的键
@@ -103,3 +157,6 @@ xhr.setRequestHeader('Accept','application/json');
 xhr.send(null)
 ```
 
+### 并发与并行的区别
+1. 并发是宏观概念 我分别有任务A 和 任务B 在一段时间内通过任务间的切换完成了这两个任务 这种情况可以称之为并发
+2. 并行是微观概念 假设cpu
