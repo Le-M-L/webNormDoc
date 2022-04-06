@@ -160,3 +160,45 @@ xhr.send(null)
 ### 并发与并行的区别
 1. 并发是宏观概念 我分别有任务A 和 任务B 在一段时间内通过任务间的切换完成了这两个任务 这种情况可以称之为并发
 2. 并行是微观概念 假设cpu
+
+### 寄生式组合继承的实现
+```js
+// 创建父类
+function Person(name){
+    this.name = name;
+}
+// 给父类添加方法
+Person.prototype.sayName = function() {
+    console.log('my name is' + this.name)
+}
+// 创建子类
+function Student(name, grade){
+    // 调用父类 通过 改变this 指向 给 子类添加方法属性
+    Person.call(this,name);
+    // 给自己添加属性
+    this.grade = grade;
+}
+// 继承父类原型上的方法  ---- 现在原型指向父类构建函数
+Student.prototype = Object.create(Person.prototype);
+// 将原型构造器 指回自己 
+Student.prototype.constructor = Student;
+// 给自己添加方法
+Student.prototype.sayMyGrade = function(){
+    console.log('My grade is ' + this.grade)
+}
+```
+### js 的几种模块规范
+<div>第一种是 commonJs 它通过require来引入模块 通过 module.exports 定义模块的输出接口，这种模块加载方案是服务端的解决方案
+它是以同步的方式来引入模块的，因为在服务端文件都储存在本地磁盘 所以读取非常块 所以以同步的方式加载没有问题 
+但如果是在浏览器端 由于模块加载是使用网络请求 因此使用异步加载的方式更加合适</div>
+<div>
+第二种是AMD方案。这种方案采取异步加载的方式来加载模块 模块的加载不影响后面语句的执行，所有依赖这个模块的语句都定义在一个回调函数里，等到加载完成后在执行回调函数
+require.js实现了AMD规范
+</div>
+
+<div>
+第三种是CMD方案，这种方案和AMD方案都是为了解决异步模块加载的问题，sea.js实现了CMD规范，它和require.js的区别在于模块定义时对依赖的处理不同和对依赖模块的执行时机的处理不同
+</div>
+<div>
+第四种方案是ES6提出的方案，使用Import 和 export 的形式来导入导出模块
+</div>
