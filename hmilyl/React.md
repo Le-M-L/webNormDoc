@@ -124,4 +124,93 @@ export class Dashboard extends React.Component {
 
 ## 什么是Redux及其工作原理
 Redux是React的一个状态库 它基于flux，redux简化了React中的单向数据流，Redux将状态管理完全从react中抽象出来
-### 它是如何工作的
+
+
+## 父子组件通讯
+<p>父组件 -> 子组件  key={xxx}方式传递至子组件 子组件通过this.props.key获取参数</p>
+
+<p>子组件 -> 父组件  利用props callback 通信，父组件传递一个callback到子组件，当事件触发时将参数放置到callback带回给父组件</p>
+
+<p>Context 适用于跨层级组件之间通讯</p>
+
+```js
+// context.js
+import React from "react";
+const { Consumer, Provider } = React.createContext(null);// 创建 context 并暴露Consumer和Perovide
+export { Consumer, Provider }
+
+// 父组件
+import React from "react";
+import Son from "./son";
+import { Provider } from "./context"
+class Father extends React.Component{
+  constructor(props){
+    super(props)
+  }
+  state = {
+    info: 'info from father'
+  }
+  render(){
+    return(
+      <Provider value={this.state.info}>
+        <div>
+          <p>{this.state.info} </p> 
+          <Son />
+        </div>
+      </Provider>
+    )
+  }
+}
+export default Father
+// 子组件
+import React from "react"
+import GrandSon from "./grandson";
+import { Consumer } from "./context"
+class Son extends React.Component{
+  construtor(props){
+    super(props)
+  }
+  render(){
+    return (
+      <Consumer>
+      {
+        info => (
+          // 通过Consumer 直接获取父组件的值
+          <div>
+            <p>父组件的值:{info}</p>
+            <GranSon />
+          </div>
+        )
+      }
+      </Consumer>
+    )
+  }
+}
+export default Son
+// 孙子组件
+import React from "react"
+import { Consumer } from "./context"
+class GrandSon extends React.Component{
+    constructor(props){
+      super(props)
+    }
+    render(){
+      return(
+        <Consumer>
+            {(info) => (
+          // 通过 Consumer 中可以直接获取组父组件的值
+          <div>
+            <p>组父组件的值:{info}</p>
+          </div>
+        )}
+        </Consumer>
+      )
+    }
+}
+export default GrandSon
+// 如果需要消费多个Context, 则React需要使每一个consumer组件的context在组件树中成为一个单独的节点
+// provider
+
+```
+
+## onRef 
