@@ -16,34 +16,29 @@ module.exports = {
 
 function createNav() {
     return [
-        {
-            text: 'web规范',
-            link: '/guide/webRule',
-            // items: [
-            //     {
-            //         text: 'web规范',
-            //         link: '/guide/namingRule',
-            //     }
-            // ],
-        },
-        {
-            text: 'UI规范',
-            link: '/guide/',
-            items: [
-                {
-                    text: '钉铛后台系统规范',
-                    link: 'http://116.62.122.54:8090/钉铛后台系统规范.pdf',
-                },
-                {
-                    text: '钉铛科技移动端规范',
-                    link: 'http://116.62.122.54:8090/钉铛科技移动端规范.pdf',
-                },
-                {
-                    text: '钉铛科技前端开发规范',
-                    link: '/guide/webRule',
-                },
-            ],
-        },
+        // {
+        //     text: 'web规范',
+        //     link: '/guide/webRule',
+           
+        // },
+        // {
+        //     text: 'UI规范',
+        //     link: '/guide/',
+        //     items: [
+        //         {
+        //             text: '钉铛后台系统规范',
+        //             link: 'http://116.62.122.54:8090/钉铛后台系统规范.pdf',
+        //         },
+        //         {
+        //             text: '钉铛科技移动端规范',
+        //             link: 'http://116.62.122.54:8090/钉铛科技移动端规范.pdf',
+        //         },
+        //         {
+        //             text: '钉铛科技前端开发规范',
+        //             link: '/guide/webRule',
+        //         },
+        //     ],
+        // },
         {
             text: '笔记',
             link: '/minute/',

@@ -94,7 +94,7 @@ sudo yum install docker-ce
 22. docker restart 容器id 重启容器
 
 ## 使用docker 安装mysql
-1. 使用docker pull 拉取 docker hub(https://hub.docker.com/search?q=&type=image) 仓库中mysql镜像（注意备注）
+1. 使用docker pull 拉取 docker hub(https://hub.domcker.com/search?q=&type=image) 仓库中mysql镜像（注意备注）
 ```sh
 docker pull mysql:8.0
 ```
@@ -125,7 +125,7 @@ docker pull nginx
 ```
 2. 启动nginx
 ```sh
-docker run --name nginx -p 80:80 -d nginx
+docker run --name nginx -p 8080:80 -d nginx
 ```
 3. 查看结果
 ```sh
@@ -147,10 +147,10 @@ mkdir -p /data/nginx/logs
 
 2. 将容器中的相应文件copy到刚创建的管理目录中
 ```sh
-docker cp 67e:/etc/nginx/nginx.conf /data/nginx/
-docker cp 67e:/etc/nginx/conf.d /data/nginx/conf/
-docker cp 67e:/usr/share/nginx/html/ /data/nginx/www/
-docker cp 67e:/var/log/nginx/ /data/nginx/logs/
+docker cp c07:/etc/nginx/nginx.conf /data/nginx/
+docker cp c07:/etc/nginx/conf.d /data/nginx/conf/
+docker cp c07:/usr/share/nginx/html/ /data/nginx/www/
+docker cp c07:/var/log/nginx/ /data/nginx/logs/
 注：docker cp 67e 中的 "67e" 为容器ID前缀，只要唯一就好了
 ```
 
@@ -161,7 +161,7 @@ docker rm 67e
 ```
 4. 再次启动容器并作目录挂载(也相当于共享)
 ```sh
-docker run --name nginx -p 80:80 -v /data/nginx/nginx.conf:/etc/nginx/nginx.conf -v /data/nginx/www/:/usr/share/nginx/html/ -v /data/nginx/logs/:/var/log/nginx/ -v /data/nginx/conf/:/etc/nginx/conf.d --privileged=true -d nginx
+docker run --name nginx -p 8080:80 -v /data/nginx/nginx.conf:/etc/nginx/nginx.conf -v /data/nginx/www/:/usr/share/nginx/html/ -v /data/nginx/logs/:/var/log/nginx/ -v /data/nginx/conf/conf.d:/etc/nginx/conf.d --privileged=true -d nginx
 注：为了好看所以做了换行，执行的时候还是需要改成一行，每行一个空格隔开就可以了
 
 ```
