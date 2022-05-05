@@ -87,6 +87,20 @@ yarn add -D @types/passport-local
 ```sh
 yarn add 
 ```
+数据库连接
+```sh
+yarn add typeorm mysql2
+yarn add @nestjs/typeorm
+```
+定时任务
+```sh
+yarn add @nestjs/schedule
+```
+任务队列
+```sh
+yarn add @nestjs/bull bull
+yarn add @types/bull -D
+```
 ```ts
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
