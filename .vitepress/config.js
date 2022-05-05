@@ -15,11 +15,12 @@ module.exports = {
 };
 
 function createNav() {
+    let nav = ['vue', 'react', 'js', 'ts', 'css', 'html', 'node', 'java', 'nginx', 'linux', 'vite', 'webpack', 'plugin'];
     return [
         // {
         //     text: 'web规范',
         //     link: '/guide/webRule',
-           
+
         // },
         // {
         //     text: 'UI规范',
@@ -39,77 +40,19 @@ function createNav() {
         //         },
         //     ],
         // },
+        ...nav.map((item) => ({
+            text: item,
+            link: `/minute/${item}/${item}`,
+        })),
+     
         {
-            text: '笔记',
-            link: '/minute/',
-            items: [
-                {
-                    text: 'Vue',
-                    link: '/minute/vue/vue',
-                },
-
-                {
-                    text: 'React',
-                    link: '/minute/react/react',
-                },
-                {
-                    text: 'Js',
-                    link: '/minute/js/js',
-                },
-                {
-                    text: 'Ts',
-                    link: '/minute/ts/ts',
-                },
-                {
-                    text: 'Css',
-                    link: '/minute/css/css',
-                },
-                {
-                    text: 'Html',
-                    link: '/minute/html/html',
-                },
-                {
-                    text: 'Npm',
-                    link: '/minute/npm/npm',
-                },
-                {
-                    text: 'Node',
-                    link: '/minute/node/node',
-                },
-                {
-                    text: 'Homebrew',
-                    link: '/minute/homebrew/homebrew'
-                },
-                {
-                    text: 'Java',
-                    link: '/minute/java/java'
-                },
-                {
-                    text: 'Nginx',
-                    link: '/minute/nginx/nginx'
-                },
-                {
-                    text: 'linux',
-                    link: '/minute/linux/index'
-                },
-                {
-                    text: 'Vite',
-                    link: '/minute/vite/vite',
-                },
-                {
-                    text: 'Webpack',
-                    link: '/minute/webpack/webpack',
-                },
-                {
-                    text: '插件',
-                    link: '/minute/plugin/plugin',
-                },
-            ],
+            text: 'Mac相关',
+            link: '/minute/homebrew/homebrew',
         },
         {
-            text:'面试题',
-            link:'/hmilyl/vue'
-        }
+            text: '面试题',
+            link: '/hmilyl/Vue',
+        },
     ];
 }
 
@@ -175,30 +118,34 @@ function createSidebar() {
                 text: 'Node',
                 link: '/minute/node/node',
             },
+            {
+                text: 'nest',
+                link: '/minute/node/nest',
+            },
         ],
         '/minute/homebrew': [
             {
                 text: 'Homebrew',
-                link: '/minute/homebrew/homebrew'
-            }
+                link: '/minute/homebrew/homebrew',
+            },
         ],
         '/minute/java': [
             {
                 text: 'Java',
-                link: '/minute/java/java'
-            }
+                link: '/minute/java/java',
+            },
         ],
         '/minute/nginx': [
             {
                 text: 'Nginx',
-                link: '/minute/nginx/nginx'
-            }
+                link: '/minute/nginx/nginx',
+            },
         ],
         '/minute/linux': [
             {
-                text: 'Nginx',
-                link: '/minute/linux/index'
-            }
+                text: 'linux',
+                link: '/minute/linux/linux',
+            },
         ],
         '/minute/vite/': [
             {
@@ -224,10 +171,10 @@ function createSidebar() {
         //         link:'/guide/webRule'
         //     }
         // ],
-        '/hmilyl':[
+        '/hmilyl': [
             {
                 text: '面试题',
-                children:[
+                children: [
                     {
                         text: 'HTML相关',
                         link: '/hmilyl/Html',
@@ -248,22 +195,21 @@ function createSidebar() {
                         text: 'React相关',
                         link: '/hmilyl/React',
                     },
-                ]
+                ],
             },
-      
         ],
         '/': [
             {
                 text: 'web规范',
                 children: [
-                    {
-                        text: '前端开发规范',
-                        link: '/guide/webRule',
-                    },
-                    {
-                        text: 'git提交规范',
-                        link: '/guide/Git',
-                    }
+                    // {
+                    //     text: '前端开发规范',
+                    //     link: '/guide/webRule',
+                    // },
+                    // {
+                    //     text: 'git提交规范',
+                    //     link: '/guide/Git',
+                    // },
                     // {
                     //     text: 'HTML 规范',
                     //     link: '/guide/htmlRule',
@@ -287,6 +233,5 @@ function createSidebar() {
                 ],
             },
         ],
-        
     };
 }

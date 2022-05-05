@@ -101,9 +101,9 @@ yarn add @nestjs/schedule
 yarn add @nestjs/bull bull
 yarn add @types/bull -D
 ```
-单文件 小文件 上传和下载
-```sh
-yarn add @nestjs/platform-express
+单文件 小文件 上传和下载  基于流下载
+```sh 
+yarn add compressing
 ```
 ```ts
 import { Controller, Get } from '@nestjs/common';

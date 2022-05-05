@@ -1,4 +1,9 @@
-# docker 安装配置
+# linux
+
+## linux 命令
+
+
+## docker 安装配置
 1. Docker 要求 CentOS 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的CentOS 版本是否支持 Docker 。
 通过 uname -r 命令查看你当前的内核版本
 ```sh
@@ -46,7 +51,7 @@ sudo systemctl enable docker
 docker version
 ```
 
-## 问题
+### 问题
 1. 因为之前已经安装过旧版本的docker，在安装的时候报错如下：
 ```sh
 Transaction check error:
@@ -68,7 +73,7 @@ sudo yum erase docker-common-2:1.12.6-68.gitec8512b.el7.centos.x86_64
 sudo yum install docker-ce
 ```
 
-## docker 命令
+### docker 命令
 1. docker ps 查看当前正在运行的容器
 2. docker ps -a 查看所有容器的状态
 3. docker start/stop id/name 启动/停止某个容器
@@ -93,7 +98,7 @@ sudo yum install docker-ce
  如：docker exec -it mysql8.0 /bin/bash
 22. docker restart 容器id 重启容器
 
-## 使用docker 安装mysql
+### 使用docker 安装mysql
 1. 使用docker pull 拉取 docker hub(https://hub.domcker.com/search?q=&type=image) 仓库中mysql镜像（注意备注）
 ```sh
 docker pull mysql:8.0
@@ -118,7 +123,7 @@ cd /usr/bin
 mysql -u root -p
 ```
 
-## nginx 安装
+### nginx 安装
 1. pull ngxin
 ```sh
 docker pull nginx
@@ -135,7 +140,7 @@ docker ps
 ```sh
 docker exec -it nginx bash
 ```
-### 映射nginx 配置
+#### 映射nginx 配置
 配置得在容器中进行，这样的话太麻烦了，所以把配置文件给映射出来，方便配置与管理
 1. 创建管理目录
 ```sh
@@ -170,7 +175,7 @@ docker run --name nginx -p 8080:80 -v /data/nginx/nginx.conf:/etc/nginx/nginx.co
 docker restart 容器id  
 ```
 
-### 配置相关
+#### 配置相关
 1. 在location 中 echo "hello Nginx！" 访问可以直接输出文字
 ```sh
 例：
