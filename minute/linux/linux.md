@@ -1,7 +1,17 @@
 # linux
 
 ## linux 命令
+zip 解压  需要先安装对应的依赖
+```sh
+yum install -y unzip zip   
 
+unzip test.zip 				->将test.zip解压到当前文件下
+unzip -n test.zip -d /tmp 	->将test.zip解压到/tmp目录下，并且不要覆盖已有文件
+unzip -v test.zip			->查看test.zip内容，但不解压
+unzip -o test.zip -d tmp/	->将test.zip解压到/tmp目录下，并且覆盖已有文件
+
+unzip /data/nginx/www/dist.zip -d /data/nginx/www
+```
 
 ## docker 安装配置
 1. Docker 要求 CentOS 系统的内核版本高于 3.10 ，查看本页面的前提条件来验证你的CentOS 版本是否支持 Docker 。
