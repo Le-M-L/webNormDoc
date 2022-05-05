@@ -64,6 +64,29 @@ nest g d common/decorators/roles
 ```sh
 yarn add @nestjs/swagger swagger-ui-express
 ```
+邮箱依赖库   依赖于node mail
+```sh
+yarn add @nestjs-modules/mailer nodemailer
+yarn add -D @types/nodemailer
+https://www.npmjs.com/package/@nestjs-modules/mailer
+```
+config 读取文件 依赖
+```sh
+yarn add nestjs-config
+```
+服务监控  内存信息等
+```sh
+yarn add nest-status-monitor
+```
+校验  权限校验  本地校验
+```sh
+yarn add @nestjs/passport passport passport-local
+yarn add -D @types/passport-local
+```
+令牌到身份校验
+```sh
+yarn add 
+```
 ```ts
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
