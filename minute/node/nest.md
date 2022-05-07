@@ -257,8 +257,11 @@ export class HttpService<T> {
 ```
 
 ## module
-@module 属性 
 
+```sh
+nest g mo cats modules
+```
+@module 属性 
 ```sh
 providers   由Nest注入器实例化的提供者，并且可以至少在整个模块中共享
 controllers 必须创建的一组控制器
@@ -267,17 +270,58 @@ exports     由本模块提供并应用在其他模块中 可用的提供者的 
 ```
 
 ```ts
-import { Module } from "@nestjs/common"
+// DynamicModule 动态模块
+import { Module, Global, DynamicModule } from "@nestjs/common"
 import { CatsController } from "./cats.controller"
 import { CatsService } from "./cats.service"
 
+@Global() // 将该模块设置为全局模块 其他无需在进行导入 可以直接使用
 @module({
+  imports: [CommonModule], // 模块的内部提供者 也是可以 再次导出
   controllers: [CatsController],
   providers: [CatsService],
-  exports: [CatsService], // 每个导入CatsModule的模块都可以访问 CatsService  并且他们讲共享相同的CatsService实例
-  
+  exports: [CatsService,CommonModule], // 每个导入CatsModule的模块都可以访问 CatsService  并且他们讲共享相同的CatsService实例
 })
 
 export class CatsModule{}
+```
+
+动态模块 通过forRoot 可以同步或异步返回动态模块
+
+```ts
+import { Module, DynamicModule } from "@nestjs/common";
+import { createDatebaseProviders } from "./database.providers"
+import { Connection } from "./connection.provider"
+
+@Module({
+  providers: [Connection]
+})
+// 动态导入的方法
+export class DatabaseModule {
+  static forRoot(entities = [], options?): DynamicModule {
+    const providers = createDatebaseProviders(options, entities);
+    return {
+      global:true, // 设置为全局的动态模块
+      module: DatabaseModule,
+      providers: providers,
+      exports: providers
+    }
+  }
+}
+
+
+
+import { Module } from '@nestjs/common';
+import { DatabaseModule } from './database/database.module';
+import { User } from './users/entities/user.entity';
+
+@Module({
+  imports: [DatabaseModule.forRoot([User])],
+  exports: [DatabaseModule], // 导出的时候是可以省略 forRoot的
+})
+export class AppModule {}
 
 ```
+
+## middleware
+中间件是在路由处理程序之前调用的函数  中间件可以访问请求和响应对象 以及应用程序请求响应生命周期中的next()中间件函数。
