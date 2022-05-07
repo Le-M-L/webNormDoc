@@ -126,7 +126,12 @@ export class AppController {
 
 
 ```
-# Controller 控制器负责处理传入的请求并将响应返回给客户端。
+## Controller 
+控制器负责处理传入的请求并将响应返回给客户端。
+
+```sh
+nest g co cats modules
+```
 
 ```ts
 import { Controller, Get, Req } from '@nestjs/common';
@@ -143,6 +148,13 @@ export class CatsController {
     return 'This action returns all cats';
   }
 }
+// 用来定义数据类型的
+export class CreateCatDto{
+  readonly name: string;
+  readonly age: string;
+  readonly breed: string;
+}
+
 import { Controller, Get, Query, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto, ListAllEntities } from './dto';
 
@@ -173,4 +185,99 @@ export class CatsController {
     return `This action removes a #${id} cat`;
   }
 }
+```
+
+## service 
+负责数据储存和检索 
+```sh
+nest g s cats modules
+```
+```ts
+/**** service start ****/
+export interface Cat {
+  name: string;
+  age: number;
+  breed: string;
+}
+
+import { Injectable } from "@nestjs/common"
+import { Cat } from "./interfaces/cat.interface"
+// 依赖注入
+@Injectable()
+export class CatsService{
+  private readonly cats: Cat[] = [];
+
+  create(cat: Cat){
+    this.cats.push(cat)
+  }
+
+  findAll(): Cat[]{
+    return this.cats;
+  }
+}
+
+/**** service end ****/
+
+/**** controller start ****/
+import { Controller, Get, Post, Body } from '@nestjs/common';
+import { CatsService } from "./catsService"
+
+@Controller('cats');
+export class CatsController {
+  constructor(private catsService: CatsService){}
+
+  @Post()
+  async create(@Body() createCatDto: CreateCatDto){
+    this.catsService.create(createCatDto)
+  }
+
+  @Get()
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll()
+  }
+}
+// 可选的privider
+import { Injectable, Optional, Inject } from "@nestjs/common";
+
+//  可选的privider 需要在constructor中使用@Optional()
+@Injectable()
+export class HttpService<T> {
+  constructor(
+    @Optional() @Inject('HTTP_OPTIONS') private readonly httpClient:T
+  ){}
+}
+
+
+// 基于属性的注入
+@Injectable()
+export class HttpService<T> {
+  @Inject('HTTP_OPTIONS')
+  private readonly httpClient: T;
+}
+```
+
+## module
+@module 属性 
+
+```sh
+providers   由Nest注入器实例化的提供者，并且可以至少在整个模块中共享
+controllers 必须创建的一组控制器
+imports     导入模块的列表， 这些模块道出了此模块所需的  提供者 -- 也就是方法
+exports     由本模块提供并应用在其他模块中 可用的提供者的 子集
+```
+
+```ts
+import { Module } from "@nestjs/common"
+import { CatsController } from "./cats.controller"
+import { CatsService } from "./cats.service"
+
+@module({
+  controllers: [CatsController],
+  providers: [CatsService],
+  exports: [CatsService], // 每个导入CatsModule的模块都可以访问 CatsService  并且他们讲共享相同的CatsService实例
+  
+})
+
+export class CatsModule{}
+
 ```
