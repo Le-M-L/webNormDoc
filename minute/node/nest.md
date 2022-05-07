@@ -337,6 +337,7 @@ nest g middleware common/middleware/logger
 5. 如果当前的中间件函数没有结束请求-响应周期。它必须调用next()将控制传递给下一个中间件函数。否者请求将被挂起
 
 ```ts
+// 类中间件
 import { Injectable, NestMiddleware } from "@/nestjs/common"
 import { Request, Response, NextFunction } from "express"
 
@@ -350,22 +351,44 @@ export class LoggerMiddleware implements NestMiddleware {
   }
 }
 
+// 函数中间件 当中间件没有依赖关系 可以考虑使用函数中间件
+export function logger(req, res, next){
+  console.log('Request...')
+  next()
+}
+
+// 中间件注册
 import { Module, NestModule, RequestMethod, MiddlewareConsumer } from "@nestjs/common"
 import { LoggerMiddleware } from "./common/middleware/logger.middleware"
 import { CatsModule } from "./cats/cats.module"
-
+import { CatsController } from "./cats/cats.controller"
 @module({
   import: [CatsModule]
 })
-
+// forRoutes 可以接受 一个字符 多个字符串 对象 一个控制类甚至多个控制器类 
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer){
     consumer
-      .apply(LoggerMiddleware)
-      .forRoutes('cats') // 用来限制特定的 路由 使用中间件
-      。forRoutes({ path: 'cats', method: RequestMethod.GET})
+      .apply(LoggerMiddleware ) // 单个中间件使用 也可以使用多个中间件 逗号隔开
+      // .apply(LoggerMiddleware, cors(), ) // 多个中间件
+       .exclude(
+        { path:'cats', method: RequestMethod.GET }
+        { path:'cats', method: RequestMethod.POST },
+        'cats/(.*)'
+      ) // 排除特定路由使用中间件
+      .forRoutes('cats') // 字符串方式  用来限制特定的 路由 使用中间件
+      // .forRoutes({ path: 'cats', method: RequestMethod.GET}) // 对象方式
+      // .forRoutes({ path: 'ab*cd', method: RequestMethod.ALL}) 通配符
+      // .forRoutes(CatsController) // 控制器方式
+     
   }
 }
+
+// 全局中间件
+const app = await NestFactory.create(AppModule);
+app.use(logger);
+await app.listen(3000);
+
 
 ```
 
