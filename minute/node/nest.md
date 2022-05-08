@@ -328,7 +328,7 @@ export class AppModule {}
 ```sh
 nest g middleware common/middleware/logger
 ```
-
+<div>中间件不能通过@module 装饰器列出， 只能通过模块类configure()方法来设置</div>
 中间件是在路由处理程序之前调用的函数  中间件可以访问请求和响应对象 以及应用程序请求响应生命周期中的next()中间件函数。
 1. 执行任何代码
 2. 对请求和响应对象进行更改
@@ -391,5 +391,187 @@ await app.listen(3000);
 
 
 ```
+## filter
+异常处理 负责整个应用的所有异常抛出
+<div> </div>
 
-中间件不能通过@module 装饰器列出， 只能通过模块类configure()方法来设置
+```ts
+import { HttpException } from "@nestjs/common"
+// HttpException  有两个必填参数 
+// 1. response    定义json 响应体 
+// 2. status      定义 http 状态
+// 默认情况下JSON响应主体包含两个属性  
+// 1. statusCode  默认为status参数重提供的http状态吗
+// 2. message 基于状态的http 错误的简短描述 
+
+@Get()
+async findAll(){
+  throw new HttpException('Forbidden', HttpStatus.FORBIDDEN)
+}
+// { 'statusCode': 403, 'message': 'Forbidden' }
+
+@Get()
+async findAll(){
+  throw new HttpException({
+    status: HttpStatus.FORBIDDEN,
+    error: 'This is a custom message'
+  }, HttpStatus.FORBIDDEN)  // 第二个参数为有效的状态码
+}
+//  { 'status': 403, 'error': 'Forbidden' }
+
+// 自定义异常  forbidden.exception.ts
+export class ForbiddenException extends HttpException {
+  constructor(){
+    super('Forbidden', HttpStatus.FORBIDDEN)
+  }
+}
+// 使用
+@Get()
+async findAll(){
+  throw new ForbiddenException()
+}
+
+// 异常过滤器 ExceptionFilter
+// http-exception.filter.ts
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { Request, Response } from 'express';
+
+@Catch(HttpException)
+export class HttpExceptionFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+    const ctx = host.switchToHttp();
+    const response = ctx.getResponse<Response>();
+    const request = ctx.getRequest<Request>();
+    const status = exception.getStatus();
+
+    response
+      .status(status)
+      .json({
+        statusCode: status,
+        timestamp: new Date().toISOString(),
+        path: request.url,
+      });
+  }
+}
+// 绑定过滤器
+@Post()
+@UseFilters(new HttpExceptionFilter()) // 多个可以逗号隔开
+// @UseFilters(HttpExceptionFilter) // 直接传递类 通过框架实例化 开启依赖注入 也能调用   应该尽可能使用类
+async create(@Body() createCatDto: CreateCatDto) {
+  throw new ForbiddenException();
+}
+// 全局过滤器
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  // useGlobalFilters 该方法不会为 网关和 混合应用程序设置过滤器  可以注册一个全局范围过滤器
+  app.useGlobalFilters(new HttpExceptionFilter()); 
+  await app.listen(3000);
+}
+bootstrap();
+// 注册全局范围过滤器  app.module.ts
+import { Module } from '@nestjs/common';
+import { APP_FILTER } from '@nestjs/core';
+
+@Module({
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
+})
+export class AppModule {}
+
+```
+## pipe
+ 管道有两种效果
+ 1. 转换 对输入的数据转换为所需的数据输出  比如拿到的是string 需要转换为 number
+ 2. 验证 如果验证成功则继续传递 否则 验证失败抛出异常
+
+```ts
+// validate.pipe.ts
+// 每个管道必须提供一个 transform 方法 这个方法有两个参数 value metadata
+// 1. value 是当前处理的参数
+// 2. metadata 是其元数据 元数据包含  type, metatype, data
+
+
+import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
+import { ObjectSchema } from '@hapi/joi';
+
+@Injectable()
+export class JoiValidationPipe implements PipeTransform {
+  constructor(private schema: ObjectSchema) {}
+
+  transform(value: any, metadata: ArgumentMetadata) {
+    const { error } = this.schema.validate(value);
+    if (error) {
+      throw new BadRequestException('Validation failed');
+    }
+    return value;
+  }
+}
+
+// 绑定管道
+@Post()
+@UsePipes(new JoiValidationPipe(createCatSchema))
+async create(@Body() createCatDto: CreateCatDto) {
+  this.catsService.create(createCatDto);
+}
+
+// 使用管道进行类型转换
+@Get(':id')
+async findOne(@Param('id', new ParseIntPipe()) id) {
+  return await this.catsService.findOne(id);
+}
+
+
+// 全局注册
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(3000);
+}
+bootstrap();
+
+
+```
+## guard
+守卫  用来进行角色权限控制 token校验 等 
+
+```ts
+// roles.decorator.ts 
+import { SetMetadata } from '@nestjs/common';
+
+export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
+
+
+// auth.guard.ts
+import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+  // 每个 守卫 都必须有一个 canActivate 函数  返回 true 或 false 判断是否 允许请求
+  // canActivate 接收一个参数  这个参数继承 ArgumentsHost
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    const request = context.switchToHttp().getRequest();
+    return validateRequest(request);
+  }
+}
+// 通过UseGuards绑定守卫
+@Controller('cats')
+@UseGuards(RolesGuard)
+@SetMetadata('roles', ['admin']) // 设置能访问的角色
+export class CatsController {}
+
+// 全局守卫设置
+const app = await NestFactory.create(AppModule);
+app.useGlobalGuards(new RolesGuard());
+
+
+```
+
+## interceptor
+拦截器 在执行之前或之前之后执行的逻辑
