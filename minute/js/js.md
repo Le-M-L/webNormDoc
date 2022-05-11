@@ -85,3 +85,13 @@ arguments            赋值
 
 // 函数作用域取值 是去找创建他的作用域取值 而不是 父作用域/
 // 函数默认this是window
+
+## object.create 
+实现原理 
+```js
+function create(proto){
+    function Fn(){}
+    Fn.prototype = proto
+    return new Fn()
+}
+```
