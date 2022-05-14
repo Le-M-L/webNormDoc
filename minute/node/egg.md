@@ -64,3 +64,21 @@ app.mysql.query()
 ## sequelize 建表
 // --env=test 切换数据库
 npx sequelize dn:migrate --env=test 执行命令
+
+ // 插入数据
+npx sequelize seed:create --name init-users
+插入数据
+
+执行所有命令 
+npx sequelize db:seed:all
+
+2. define 定义
+
+OEM 工具去管理数据库 增删改查
+指定不同类型的文件存放的位置
+config 值的数据库连接
+migrations 放建表语句
+seeders 放种子数据存放位置
+models 放定义模型的目录
+
+修改数据库配置
