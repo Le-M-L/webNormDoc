@@ -61,7 +61,8 @@ Service
 1. query 用来执行SQL 语句的意思 增删改查都可以
 app.mysql.query()
 
-## sequelize 建表
+## sequelize
+ORM 数据库 操作管理
 // --env=test 切换数据库
 npx sequelize dn:migrate --env=test 执行命令
 
@@ -82,3 +83,115 @@ seeders 放种子数据存放位置
 models 放定义模型的目录
 
 修改数据库配置
+
+### create 和 build 新增数据
+
+```js
+// 通过 build() 办法须要通过调用 save() 进行保留
+let user = User.build({
+  name: "test",
+  password: "123456",
+});
+let rs = await user.save();
+// 通过 create() 进行创立
+let rs = await User.create({
+  name: "test",
+  password: "123456",
+});
+```
+
+### update 修改数据
+
+```js
+// 留神：更新失败返回值到第0个值是0，更新胜利则是1
+// 第一个参数为更新值
+// 第二个参数为更新查问条件
+let rs = await User.update(
+  { name: "test2" },
+  {
+    where: { id: 1 },
+  }
+);
+```
+### destroy 删除数据
+
+```js
+let rs = await User.destroy({
+  where: { id: 1 },
+});
+```
+
+### findAll 和 findOne 查询数据
+
+```js
+let Op = Sequelize.Op;
+
+// 查问所有
+let rs = await User.findAll({
+  limit: 10, // 当页条数
+  offset: 0, // 开始下标
+  order: [["create_time", "desc"]], // 排序规定
+  where: {
+    // 查问条件
+    type: "vip", // 指定值
+    [Op.or]: {
+      // 应用非凡操作符
+      id: [1, 2, 3, 4, 5], // id 蕴含这些数据
+      [Op.like]: { name: "super_" }, // 用户名蕴含 super_
+    },
+  },
+  attributes: [
+    // 指定返回的属性
+    "id",
+    ["name", "userName"], // 第一个参数为属性，第二个参数为别名，返回数据以别名返回
+  ],
+});
+// 查问一条数据
+let rs = await User.findOne({
+  where: { id: "123456" },
+});
+```
+
+## findByPk 通过主键查询
+
+```js
+// findByPk - 通过主键查问
+let res = await User.findByPk(123);
+
+// findOne - 查问满足条件的第一条数据
+let res = await User.findOne({
+  where: {
+    type: "user",
+  },
+});
+
+// findOrCreate - 查问，如果不存在将创立数据
+const [user, created] = await User.findOrCreate({
+  where: { username: "test" },
+  // 如果不存在，将会按 defaults 创立值
+  defaults: {
+    job: "JavaScript",
+  },
+});
+console.log(user.username); // 'test'
+console.log(user.job); // 这里可能为 JavaScript 也可能为其余的
+console.log(created); // 是否有创立实例
+if (created) {
+  console.log(user.job); // 创立实例，该值必然为 JavaScript
+}
+
+// findAndCountAll - 查问并返回总数
+// count - 该查问条件下的总条数
+// rows - 查问的所有数据
+const { count, rows } = await User.findAndCountAll({
+  where: {
+    type: "vip",
+  },
+});
+```
+
+### bulkCreate 批量新增
+
+```js
+let re = await User.bulkCreate({ name: "test_1" }, { name: "test_2" });
+```

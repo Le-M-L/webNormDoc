@@ -122,6 +122,10 @@ function createSidebar() {
                 text: 'nest',
                 link: '/minute/node/nest',
             },
+            {
+                text: 'egg',
+                link: '/minute/node/egg',
+            },
         ],
         '/minute/homebrew': [
             {
