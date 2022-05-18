@@ -243,3 +243,43 @@ server{
 }
 注：weight=1，配置的为权重，值越高权重越高
 ```
+
+## docker radis 
+拉取最新版
+```sh
+docker pull redis:latest
+```
+
+1.  创建redis 关联文件
+
+```sh
+// 如果目录不存在则创建
+mkdir -p /data/redis/myredis 
+```
+myredis.conf
+
+2. 启动radis 容器
+```sh
+docker run --restart=always --log-opt max-size=100m --log-opt max-file=2 -p 6379:6379 --name redis -v /data/redis/myredis/redis.conf:/etc/redis/redis.conf -v /data/redis/myredis/data:/data -d redis redis-server /etc/redis/redis.conf  --appendonly yes  --requirepass redis1093185442
+
+```
+
+–restart=always 总是开机启动
+–log是日志方面的
+-p 6379:6379 将6379端口挂载出去
+–name 给这个容器取一个名字
+-v 数据卷挂载
+/data/redis/myredis/redis.conf:/etc/redis/redis.conf 这里是将 liunx 路径下的myredis.conf 和redis下的redis.conf 挂载在一起。
+/data/redis/myredis/data:/data 这个同上
+-d redis 表示后台启动redis
+redis-server /etc/redis/redis.conf 以配置文件启动redis，加载容器内的conf文件，最终找到的是挂载的目录 /etc/redis/redis.conf 也就是liunx下的/data/redis/myredis/redis.conf
+–appendonly yes 开启redis 持久化
+–requirepass redis1093185442 设置密码
+
+3. 进入docker 容器
+
+```sh
+ docker exec -it 63d6056df6f3 /bin/bash
+```
+
+4. 通过 redis-cli 连接测试使用 redis 服务
