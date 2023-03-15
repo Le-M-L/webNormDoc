@@ -5,7 +5,6 @@
         <div class="nav">
             <NavLinks />
         </div>
-
         <div class="nav-icons">
             <div class="item">
                 <dark-mode-switch />

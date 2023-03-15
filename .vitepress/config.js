@@ -1,5 +1,5 @@
 module.exports = {
-    base: '/',
+    base: '/doc',
     title: 'web规范',
     lang: 'zh-CN',
     description: 'DINGDANG前端规范.',

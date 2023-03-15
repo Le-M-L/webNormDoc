@@ -575,3 +575,10 @@ app.useGlobalGuards(new RolesGuard());
 
 ## interceptor
 拦截器 在执行之前或之前之后执行的逻辑
+
+## class-validator 
+类型校验 和转换
+
+
+## typeOrm
+find 查询
