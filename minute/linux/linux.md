@@ -119,8 +119,71 @@ systemctl restart docker    重启docker
 ```
 3. 启动docker中镜像
 备注 ：--name 服务启动别名设置  -p端口映射 宿主机端口：镜像运行端口  -d 镜像名：tag 使用守护进程模式启动 -e：设置root帐号密码
+数据库配置文件
+my.cnf
+```sh
+[mysqld]
+user=mysql
+character-set-server=utf8
+default_authentication_plugin=mysql_native_password
+secure_file_priv=/var/lib/mysql
+sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+max_connections=1000
+ 
+ 
+default-time-zone='+08:00'
+innodb_buffer_pool_size = 128M
+port = 3306
+datadir=/var/lib/mysql
+socket=/var/run/mysqld/mysqld.sock
+pid-file=/var/run/mysqld/mysqld.pid
+ 
+# 允许连接失败的次数。
+max_connect_errors=10
+ 
+#引擎
+default-storage-engine=INNODB
+ 
+log-bin = mysql-bin
+# #设置保存时间
+expire_logs_days=7
+ 
+# #注意5.7以及更高版本需要配置本项：server-id=123454（自定义,保证唯一性）; server-id 一般去ip后三位
+server-id=138
+# #binlog格式，有3种statement,row,mixed
+binlog-format=ROW
+# #表示每1次执行写入就与硬盘同步，会影响性能，为0时表示，事务提交时mysql不做刷盘操作，由系统决定
+sync-binlog=1
+ 
+ 
+# ##开启慢sql
+slow_query_log=on
+slow_query_log_file=/var/lib/mysql/slow-query.log
+long_query_time=1
+ 
+ 
+[client]
+default-character-set=utf8
+ 
+[mysql]
+default-character-set=utf8
+```
+
 ```sh
 docker run --name mysql8.0 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0
+
+docker stop mysql && docker rm mysql
+docker run  --restart=always --privileged=true \
+-p 3307:3306 \
+--name mysql \
+-v /data/mysql/data:/var/lib/mysql \
+-v /data/mysql/conf/my.cnf:/etc/mysql/my.cnf \
+-v /data/mysql/conf/conf.d:/etc/mysql/conf.d \
+-v /data/mysql/logs:/var/log/mysql \
+-e MYSQL_ROOT_PASSWORD=root \
+-e TZ=Asia/Shanghai \
+-d mysql:8.0
+
 ```
 4. 查看运行的镜像
 ```sh
@@ -131,6 +194,13 @@ docker ps -a
 docker exec -it mysql8.0 /bin/bash
 cd /usr/bin
 mysql -u root -p
+```
+6. 数据库时区设置
+```sh
+select now();  // 查看数据库时间
+show variables like '%time_zone%'; //查询当前时区
+set global time_zOne='+8:00';  //在标准时区上加+8小时,即东8区时间
+flush privileges; // 立即生效
 ```
 
 ### nginx 安装
