@@ -83,6 +83,10 @@ sudo yum erase docker-common-2:1.12.6-68.gitec8512b.el7.centos.x86_64
 sudo yum install docker-ce
 ```
 
+### docker 日志查看
+
+docker logs -f -t --since="2022-08-10" --tail =100  容器id
+
 ### docker 命令
 1. docker ps 查看当前正在运行的容器
 2. docker ps -a 查看所有容器的状态
@@ -170,6 +174,7 @@ default-character-set=utf8
 ```
 
 ```sh
+<<<<<<< HEAD
 docker run --name mysql8.0 -p 3307:3306 -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0
 
 docker stop mysql && docker rm mysql
@@ -184,6 +189,9 @@ docker run  --restart=always --privileged=true \
 -e TZ=Asia/Shanghai \
 -d mysql:8.0
 
+=======
+docker run --name mysql8.0 --restart=always -p 3307:3306 -e MYSQL_ROOT_PASSWORD=Le19961114 -d mysql:8.0
+>>>>>>> 273f21f6271254d919d0ad7aa992d6a96b48f93a
 ```
 4. 查看运行的镜像
 ```sh
@@ -353,3 +361,15 @@ redis-server /etc/redis/redis.conf 以配置文件启动redis，加载容器内�
 ```
 
 4. 通过 redis-cli 连接测试使用 redis 服务
+
+## docker node 安装
+```sh
+docker pull node
+```
+启动 node
+```sh
+docker run -itd --name node --restart=always node #--restart=always 重启参数
+docker exec -it node /bin/bash # 进入容器 
+node -v # 查看node版本
+```
+

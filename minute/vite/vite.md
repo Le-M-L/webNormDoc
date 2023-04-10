@@ -18,11 +18,11 @@ yarn create @vitejs/app
 
 ```sh
 .
-├── build # 打包脚本相关
+`├── build # 打包脚本相关
 │   ├── config # 配置文件
 │   ├── generate # 生成器
 │   ├── script # 脚本
-│   └── vite # vite配置
+│   └── vite # vite配置`
 ├── mock # mock文件夹
 ├── public # 公共静态资源目录
 ├── src # 主目录
